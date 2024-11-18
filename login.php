@@ -35,7 +35,7 @@
 
 
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Имя пользователя</label>
+            <label for="exampleInputEmail1" class="form-label">Логин</label>
             <input type="text" class="form-control" name="user_name">
         </div>
         <div class="mb-3">

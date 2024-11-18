@@ -52,9 +52,9 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
                             value="<?= $user['full_name'] ?>"><br>
                     </div>
                     <div class="input-holder">
-                        <lable>Пользовательское имя</lable>
+                        <lable>Логин</lable>
                         <input type="text" name="user_name" value="<?= $user['username'] ?>" class="input-1"
-                            placeholder="Пользовательское имя"><br>
+                            placeholder="Логин"><br>
                     </div>
                     <div class="input-holder">
                         <lable>Пароль</lable>
@@ -76,7 +76,7 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
 
     </html>
 <?php } else {
-    $em = "First login";
+    $em = "Требуется вход";
     header("Location: login.php?error=$em");
     exit();
 }

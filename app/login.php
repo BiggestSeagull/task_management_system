@@ -15,11 +15,11 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
     $password = validate_input($_POST['password']);
 
     if (empty($user_name)) {
-        $em = "User name is required";
+        $em = "Требуется имя пользователя";
         header("Location: ../login.php?error=$em");
         exit();
     } else if (empty($password)) {
-        $em = "Password name is required";
+        $em = "Требуется пароль";
         header("Location: ../login.php?error=$em");
         exit();
     } else {
@@ -48,17 +48,17 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
                         $_SESSION['username'] = $usernameDb;
                         header("Location: ../index.php");
                     } else {
-                        $em = "Unknown error occurred ";
+                        $em = "Ошибка пароля";
                         header("Location: ../login.php?error=$em");
                         exit();
                     }
                 } else {
-                    $em = "Incorrect username or password ";
+                    $em = "Неверный логин или пароль";
                     header("Location: ../login.php?error=$em");
                     exit();
                 }
             } else {
-                $em = "Incorrect username or password ";
+                $em = "Неверный логин или пароль";
                 header("Location: ../login.php?error=$em");
                 exit();
             }
@@ -67,7 +67,7 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
 
     }
 } else {
-    $em = "Unknown error occurred";
+    $em = "Через форму не поступил логин или пароль";
     header("Location: ../login.php?error=$em");
     exit();
 }

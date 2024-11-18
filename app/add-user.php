@@ -25,7 +25,7 @@ if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['ful
 	    header("Location: ../add-user.php?error=$em");
 	    exit();
 	}else if (empty($full_name)) {
-		$em = "Требуется польное имя";
+		$em = "Требуется полное имя";
 	    header("Location: ../add-user.php?error=$em");
 	    exit();
 	}else {

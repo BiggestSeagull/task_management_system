@@ -33,10 +33,10 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                     <table class="main-table">
                         <tr>
                             <th>#</th>
-                            <th>Full name</th>
-                            <th>Username</th>
-                            <th>Role</th>
-                            <th>Action</th>
+                            <th>Полное имя</th>
+                            <th>Логин</th>
+                            <th>Роль</th>
+                            <th>Действие</th>
                         </tr>
                         <?php $i = 0;
                         foreach ($users as $user) { ?>
@@ -46,15 +46,15 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                                 <td><?= $user['username'] ?></td>
                                 <td><?= $user['role'] ?></td>
                                 <td>
-                                    <a href="edit-user.php?id=<?= $user['id'] ?>" class="edit-btn">Edit</a>
-                                    <a href="delete-user.php?id=<?= $user['id'] ?>" class="delete-btn">Delete</a>
+                                    <a href="edit-user.php?id=<?= $user['id'] ?>" class="edit-btn">Редактировать</a>
+                                    <a href="delete-user.php?id=<?= $user['id'] ?>" class="delete-btn">Удалить</a>
 
                                 </td>
                             </tr>
                         <?php } ?>
                     </table>
                 <?php } else { ?>
-                    <h3>Empty</h3>
+                    <h3>Пусто</h3>
                 <?php } ?>
             </section>
         </div>
