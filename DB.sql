@@ -13,7 +13,7 @@ CREATE TABLE tasks (
     title VARCHAR(100) NOT NULL,
     description TEXT,
     assigned_to INT,
-    status ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
+    status ENUM('ожидание', 'в работе', 'завершено') DEFAULT 'ожидание',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (assigned_to) REFERENCES users(id)
 );

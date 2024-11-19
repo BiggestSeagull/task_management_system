@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
+if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "admin") {
     include "app/Model/Task.php";
     include "app/Model/User.php";
     include "DB_connection.php";
@@ -37,7 +37,8 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                             <th>#</th>
                             <th>Название</th>
                             <th>Описание</th>
-                            <th>Роль</th>
+                            <th>Назначено</th>
+                            <th>Статус</th>
                             <th>Действие</th>
                         </tr>
                         <?php $i = 0;
@@ -53,6 +54,9 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                                             echo $user['full_name'];
                                         }
                                     } ?>
+                                </td>
+                                <td>
+                                    <?= $task['status'] ?>
                                 </td>
                                 <td>
                                     <a href="edit-task.php?id=<?= $task['id'] ?>" class="edit-btn">Редактировать</a>
@@ -76,7 +80,7 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
     </html>
 
 <?php } else {
-    $em = "Сначала войдите в аккаунт";
+    $em = "Требуется вход";
     header("Location: login.php?error=$em");
     exit();
 }

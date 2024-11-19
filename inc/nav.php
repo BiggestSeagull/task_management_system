@@ -17,19 +17,19 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="my_task.php">
                     <i class="fa fa-tasks" aria-hidden="true"></i>
                     <span>Мои задачи</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="profile.php">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <span>Профиль</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="notifications.php">
                     <i class="fa fa-bell" aria-hidden="true"></i>
                     <span>Уведомления</span>
                 </a>
