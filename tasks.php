@@ -4,8 +4,29 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
     include "app/Model/Task.php";
     include "app/Model/User.php";
     include "DB_connection.php";
-    $tasks = get_all_tasks($conn);
+
+    $text = "Все задачи";
+    if (isset($_GET['due_date']) && $_GET['due_date'] == "Due Today") {
+        $text = "Сегодня";
+        $tasks = get_all_tasks_due_today($conn);
+        $num_task = count_tasks_due_today($conn);
+
+    } else if (isset($_GET['due_date']) && $_GET['due_date'] == "Overdue") {
+        $text = "Просрочено";
+        $tasks = get_all_tasks_overdue($conn);
+        $num_task = count_tasks_overdue($conn);
+
+    } else if (isset($_GET['due_date']) && $_GET['due_date'] == "No Deadline") {
+        $text = "Без срока";
+        $tasks = get_all_tasks_NoDeadline($conn);
+        $num_task = count_tasks_NoDeadline($conn);
+
+    } else {
+        $tasks = get_all_tasks($conn);
+        $num_task = count_tasks($conn);
+    }
     $users = get_all_users($conn);
+
     ?>
     <!DOCTYPE html>
     <html>
@@ -29,45 +50,66 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
             <?php include "inc/nav.php" ?>
 
             <section class="section-1">
-                <h4 class="title">Все задачи <a href="create_task.php">Создать</a></h4>
+                <h4 class="title-2">
 
-                <?php if ($tasks != 0) { ?>
-                    <table class="main-table">
-                        <tr>
-                            <th>#</th>
-                            <th>Название</th>
-                            <th>Описание</th>
-                            <th>Назначено</th>
-                            <th>Статус</th>
-                            <th>Действие</th>
-                        </tr>
-                        <?php $i = 0;
-                        foreach ($tasks as $task) { ?>
+                    <a href="create_task.php" class="btn">Создать</a>
+                    <a href="tasks.php?due_date=Due Today">Сегодня</a>
+                    <a href="tasks.php?due_date=Overdue">Просрочено</a>
+                    <a href="tasks.php?due_date=No Deadline">Без срока</a>
+                    <a href="tasks.php">Все задачи</a>
+
+                </h4>
+
+                <h4 class="title-2"><?= $text ?> (<?= $num_task ?>)
+
+                    <?php if (isset($_GET['success'])) { ?>
+                        <div class="success" role="alert">
+                            <?php echo stripcslashes($_GET['success']); ?>
+                        </div>
+                    <?php } ?>
+
+                    <?php if ($tasks != 0) { ?>
+                        <table class="main-table">
                             <tr>
-                                <td><?= ++$i ?></td>
-                                <td><?= $task['title'] ?></td>
-                                <td><?= $task['description'] ?></td>
-                                <td>
-                                    <?php
-                                    foreach ($users as $user) {
-                                        if ($user['id'] == $task['assigned_to']) {
-                                            echo $user['full_name'];
-                                        }
-                                    } ?>
-                                </td>
-                                <td>
-                                    <?= $task['status'] ?>
-                                </td>
-                                <td>
-                                    <a href="edit-task.php?id=<?= $task['id'] ?>" class="edit-btn">Редактировать</a>
-                                    <a href="delete-task.php?id=<?= $task['id'] ?>" class="delete-btn">Удалить</a>
-                                </td>
+                                <th>#</th>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Назначено</th>
+                                <th>Срок выполнения</th>
+                                <th>Статус</th>
+                                <th>Действие</th>
                             </tr>
-                        <?php } ?>
-                    </table>
-                <?php } else { ?>
-                    <h3>Пусто</h3>
-                <?php } ?>
+                            <?php $i = 0;
+                            foreach ($tasks as $task) { ?>
+                                <tr>
+                                    <td><?= ++$i ?></td>
+                                    <td><?= $task['title'] ?></td>
+                                    <td><?= $task['description'] ?></td>
+                                    <td>
+                                        <?php
+                                        foreach ($users as $user) {
+                                            if ($user['id'] == $task['assigned_to']) {
+                                                echo $user['full_name'];
+                                            }
+                                        } ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($task['due_date'] == "")
+                                            echo "Нет срока";
+                                        else
+                                            echo $task['due_date']; ?>
+                                    </td>
+                                    <td><?= $task['status'] ?></td>
+                                    <td>
+                                        <a href="edit-task.php?id=<?= $task['id'] ?>" class="edit-btn">Редактировать</a>
+                                        <a href="delete-task.php?id=<?= $task['id'] ?>" class="delete-btn">Удалить</a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    <?php } else { ?>
+                        <h3>Пусто</h3>
+                    <?php } ?>
             </section>
         </div>
 

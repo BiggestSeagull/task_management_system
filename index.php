@@ -1,6 +1,15 @@
 <?php
 session_start();
 if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
+	include "app/Model/Task.php";
+	include "app/Model/User.php";
+	include "DB_connection.php";
+
+	$todaydue_task = count_tasks_due_today($conn);
+	$overdue_task = count_tasks_overdue($conn);
+	$nodeadline_task = count_tasks_NoDeadline($conn);
+	$num_task = count_tasks($conn);
+	$num_users = count_users($conn);
 
 	?>
 	<!DOCTYPE html>
@@ -25,7 +34,35 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
 			<?php include "inc/nav.php" ?>
 
 			<section class="section-1">
+				<?php if ($_SESSION['role'] == 'admin') { ?>
+					<div class="dashboard">
+						<div class="dashboard-item">
+							<i class="fa fa-users"></i>
+							<span><?= $num_users ?> Работающих</span>
+						</div>
+						<div class="dashboard-item">
+							<i class="fa fa-tasks"></i>
+							<span><?= $num_task ?> Всего задач</span>
+						</div>
+						<div class="dashboard-item">
+							<i class="fa fa-window-close-o"></i>
+							<span><?= $overdue_task ?> Просрочено</span>
+						</div>
+						<div class="dashboard-item">
+							<i class="fa fa-clock-o"></i>
+							<span><?= $nodeadline_task ?> Без срока</span>
+						</div>
+						<div class="dashboard-item">
+							<i class="fa fa-exclamation-triangle"></i>
+							<span><?= $todaydue_task ?> Сегодня срок сдачи</span>
+						</div>
+						<div class="dashboard-item">
+							<i class="fa fa-bell"></i>
+							<span><?= $overdue_task ?> Оповещения</span>
+						</div>
 
+					</div>
+				<?php } ?>
 			</section>
 		</div>
 

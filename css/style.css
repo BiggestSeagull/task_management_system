@@ -164,6 +164,34 @@
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.section-1 .title-2 {
+	margin-bottom: 10px;
+}
+
+.section-1 .title-2 .btn {
+	text-decoration: none;
+	display: inline-block;
+	border: none;
+	background: #4ca354;
+	padding: 10px 15px;
+	color: #fff;
+	font-size: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+	outline: none;
+	transition: background 1s;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.section-1 .title-2 .btn:hover {
+	opacity: .8;
+}
+
+.section-1 .title-2 a {
+	display: inline-block;
+	margin-right: 10px;
+}
+
 .section-1 .title a:hover {
 	opacity: .8;
 }
@@ -251,9 +279,35 @@
 	padding: 10px;
 	margin-bottom: 10px;
 }
+
 .success {
 	background: #80CE91;
 	color: #009D22;
 	padding: 10px;
 	margin-bottom: 10px;
+}
+
+.dashboard {
+	display: flex;
+	max-width: 650px;
+	width: 95%;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+.dashboard-item {
+    text-align: center;
+    background: #262931;
+    width: 200px;
+    padding: 30px 5px;
+    margin-bottom: 40px;
+}
+.dashboard-item i{
+	display: block;
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+.dashboard-item span{
+	display: block;
+    color: #fff;
 }

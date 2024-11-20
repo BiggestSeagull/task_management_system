@@ -44,6 +44,10 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
                         <textarea type="text" name="description" class="input-1" placeholder="Описание"></textarea><br>
                     </div>
                     <div class="input-holder">
+                        <lable>Срок выполнения</lable>
+                        <input type="date" name="due_date" class="input-1" placeholder="Срок выполнения"><br>
+                    </div>
+                    <div class="input-holder">
                         <lable>Для работника</lable>
                         <select name="assigned_to" class="input-1">
                             <option value="0">Выберите работника</option>

@@ -49,12 +49,17 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
                     <?php } ?>
                     <div class="input-holder">
                         <lable>Название</lable>
-                        <input type="text" name="title" class="input-1" placeholder="Полное имя"
+                        <input type="text" name="title" class="input-1" placeholder="Название"
                             value="<?= $task['title'] ?>"><br>
                     </div>
                     <div class="input-holder">
                         <lable>Описание</lable>
                         <textarea name="description" rows="5" class="input-1"><?= $task['description'] ?></textarea><br>
+                    </div>
+                    <div class="input-holder">
+                        <lable>Отложить</lable>
+                        <input type="text" name="snooze" class="input-1" placeholder="Отложить"
+                            value="<?= $task['due_date'] ?>"><br>
                     </div>
                     <div class="input-holder">
                         <lable>Для работника</lable>

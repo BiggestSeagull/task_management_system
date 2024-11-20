@@ -37,6 +37,7 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                             <th>Название</th>
                             <th>Описание</th>
                             <th>Статус</th>
+                            <th>Срок выполнения</th>
                             <th>Действие</th>
                         </tr>
                         <?php $i = 0;
@@ -46,6 +47,7 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                                 <td><?= $task['title'] ?></td>
                                 <td><?= $task['description'] ?></td>
                                 <td><?= $task['status'] ?></td>
+                                <td><?= $task['due_date'] ?></td>
 
                                 <td>
                                     <a href="edit-task-employee.php?id=<?= $task['id'] ?>" class="edit-btn">Изменить</a>
