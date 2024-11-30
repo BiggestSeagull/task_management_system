@@ -33,9 +33,13 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
 		} else {
 
 			include "Model/Task.php";
+			include "Model/Notification.php";
 
 			$data = array($title, $description, $assigned_to, $due_date);
 			insert_task($conn, $data);
+
+			$notif_data = array("Вам назначено '$title'. Пожалуйста рассмотрите и приступайте к работе", $assigned_to, 'Новая задача');
+			insert_notification($conn, $notif_data);
 
 			$em = "Задача успешно создана";
 			header("Location: ../create_task.php?success=$em");
@@ -43,7 +47,7 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
 
 		}
 	} else {
-		$em = "Данные из формы не поступили 1";
+		$em = "Данные из формы не поступили";
 		header("Location: ../create_task.php?error=$em");
 		exit();
 	}

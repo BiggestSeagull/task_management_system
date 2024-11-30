@@ -2,7 +2,7 @@
 
 function insert_task($conn, $data)
 {
-	$sql = "INSERT INTO tasks (title, description, assigned_to, due_date) VALUES(?, ?, ?,?)";
+	$sql = "INSERT INTO tasks (title, description, assigned_to, due_date) VALUES(?,?,?,?)";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute($data);
 }
@@ -20,10 +20,9 @@ function get_all_tasks($conn)
 
 	return $tasks;
 }
-
 function get_all_tasks_due_today($conn)
 {
-	$sql = "SELECT * FROM tasks WHERE due_date = CURDATE() AND status != 'completed' ORDER BY id DESC";
+	$sql = "SELECT * FROM tasks WHERE due_date = CURDATE() AND status != 'завершено' ORDER BY id DESC";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([]);
 
@@ -36,7 +35,7 @@ function get_all_tasks_due_today($conn)
 }
 function count_tasks_due_today($conn)
 {
-	$sql = "SELECT id FROM tasks WHERE due_date = CURDATE() AND status != 'completed'";
+	$sql = "SELECT id FROM tasks WHERE due_date = CURDATE() AND status != 'завершено'";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([]);
 
@@ -45,7 +44,7 @@ function count_tasks_due_today($conn)
 
 function get_all_tasks_overdue($conn)
 {
-	$sql = "SELECT * FROM tasks WHERE due_date < CURDATE() AND status != 'completed' ORDER BY id DESC";
+	$sql = "SELECT * FROM tasks WHERE due_date < CURDATE() AND status != 'завершено' ORDER BY id DESC";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([]);
 
@@ -58,7 +57,7 @@ function get_all_tasks_overdue($conn)
 }
 function count_tasks_overdue($conn)
 {
-	$sql = "SELECT id FROM tasks WHERE due_date < CURDATE() AND status != 'completed'";
+	$sql = "SELECT id FROM tasks WHERE due_date < CURDATE() AND status != 'завершено'";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([]);
 
@@ -68,7 +67,7 @@ function count_tasks_overdue($conn)
 
 function get_all_tasks_NoDeadline($conn)
 {
-	$sql = "SELECT * FROM tasks WHERE status != 'completed' AND due_date IS NULL OR due_date = '0000-00-00' ORDER BY id DESC";
+	$sql = "SELECT * FROM tasks WHERE status != 'завершено' AND due_date IS NULL OR due_date = '0000-00-00' ORDER BY id DESC";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([]);
 
@@ -81,12 +80,14 @@ function get_all_tasks_NoDeadline($conn)
 }
 function count_tasks_NoDeadline($conn)
 {
-	$sql = "SELECT id FROM tasks WHERE status != 'completed' AND due_date IS NULL OR due_date = '0000-00-00'";
+	$sql = "SELECT id FROM tasks WHERE status != 'завершено' AND due_date IS NULL OR due_date = '0000-00-00'";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([]);
 
 	return $stmt->rowCount();
 }
+
+
 
 function delete_task($conn, $data)
 {
@@ -94,6 +95,7 @@ function delete_task($conn, $data)
 	$stmt = $conn->prepare($sql);
 	$stmt->execute($data);
 }
+
 
 function get_task_by_id($conn, $id)
 {
@@ -108,7 +110,6 @@ function get_task_by_id($conn, $id)
 
 	return $task;
 }
-
 function count_tasks($conn)
 {
 	$sql = "SELECT id FROM tasks";
@@ -132,6 +133,7 @@ function update_task_status($conn, $data)
 	$stmt->execute($data);
 }
 
+
 function get_all_tasks_by_id($conn, $id)
 {
 	$sql = "SELECT * FROM tasks WHERE assigned_to=?";
@@ -144,4 +146,88 @@ function get_all_tasks_by_id($conn, $id)
 		$tasks = 0;
 
 	return $tasks;
+}
+
+
+
+function count_pending_tasks($conn)
+{
+	$sql = "SELECT id FROM tasks WHERE status = 'ожидание'";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([]);
+
+	return $stmt->rowCount();
+}
+
+function count_in_progress_tasks($conn)
+{
+	$sql = "SELECT id FROM tasks WHERE status = 'в работе'";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([]);
+
+	return $stmt->rowCount();
+}
+
+function count_completed_tasks($conn)
+{
+	$sql = "SELECT id FROM tasks WHERE status = 'завершено'";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([]);
+
+	return $stmt->rowCount();
+}
+
+
+function count_my_tasks($conn, $id)
+{
+	$sql = "SELECT id FROM tasks WHERE assigned_to=?";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([$id]);
+
+	return $stmt->rowCount();
+}
+
+function count_my_tasks_overdue($conn, $id)
+{
+	$sql = "SELECT id FROM tasks WHERE due_date < CURDATE() AND status != 'завершено' AND assigned_to=? AND due_date != '0000-00-00'";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([$id]);
+
+	return $stmt->rowCount();
+}
+
+function count_my_tasks_NoDeadline($conn, $id)
+{
+	$sql = "SELECT id FROM tasks WHERE assigned_to=? AND status != 'завершено' AND due_date IS NULL OR due_date = '0000-00-00'";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([$id]);
+
+	return $stmt->rowCount();
+}
+
+function count_my_pending_tasks($conn, $id)
+{
+	$sql = "SELECT id FROM tasks WHERE status = 'ожидание' AND assigned_to=?";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([$id]);
+
+	return $stmt->rowCount();
+}
+
+function count_my_in_progress_tasks($conn, $id)
+{
+	$sql = "SELECT id FROM tasks WHERE status = 'в работе' AND assigned_to=?";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([$id]);
+
+	return $stmt->rowCount();
+}
+
+function count_my_completed_tasks($conn, $id)
+{
+	$sql = "SELECT id FROM tasks WHERE status = 'завершено' AND assigned_to=?";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([$id]);
+
+	return $stmt->rowCount();
 }
