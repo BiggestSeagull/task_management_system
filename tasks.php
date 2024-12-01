@@ -5,26 +5,58 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
     include "app/Model/User.php";
     include "DB_connection.php";
 
-    $text = "Все задачи";
-    if (isset($_GET['due_date']) && $_GET['due_date'] == "Due Today") {
-        $text = "Сегодня";
-        $tasks = get_all_tasks_due_today($conn);
-        $num_task = count_tasks_due_today($conn);
+    // $text = "Все задачи";
+    // if (isset($_GET['due_date']) && $_GET['due_date'] == "Due Today") {
+    //     $text = "Сегодня";
+    //     $tasks = get_all_tasks_due_today($conn);
+    //     $num_task = count_tasks_due_today($conn);
 
-    } else if (isset($_GET['due_date']) && $_GET['due_date'] == "Overdue") {
-        $text = "Просрочено";
-        $tasks = get_all_tasks_overdue($conn);
-        $num_task = count_tasks_overdue($conn);
+    // } else if (isset($_GET['due_date']) && $_GET['due_date'] == "Overdue") {
+    //     $text = "Просрочено";
+    //     $tasks = get_all_tasks_overdue($conn);
+    //     $num_task = count_tasks_overdue($conn);
 
-    } else if (isset($_GET['due_date']) && $_GET['due_date'] == "No Deadline") {
-        $text = "Без срока";
-        $tasks = get_all_tasks_NoDeadline($conn);
-        $num_task = count_tasks_NoDeadline($conn);
+    // } else if (isset($_GET['due_date']) && $_GET['due_date'] == "No Deadline") {
+    //     $text = "Без срока";
+    //     $tasks = get_all_tasks_NoDeadline($conn);
+    //     $num_task = count_tasks_NoDeadline($conn);
 
-    } else {
-        $tasks = get_all_tasks($conn);
-        $num_task = count_tasks($conn);
+    // } else {
+    //     $tasks = get_all_tasks($conn);
+    //     $num_task = count_tasks($conn);
+    // }
+
+    // My code block
+    $due_date = $_GET['due_date'] ?? null;
+
+    switch ($due_date) {
+        case "Due Today":
+            $text = "Сегодня";
+            $tasks = get_all_tasks_due_today($conn);
+            $num_task = count_tasks_due_today($conn);
+            break;
+
+        case "Overdue":
+            $text = "Просрочено";
+            $tasks = get_all_tasks_overdue($conn);
+            $num_task = count_tasks_overdue($conn);
+            break;
+
+        case "No Deadline":
+            $text = "Без срока";
+            $tasks = get_all_tasks_NoDeadline($conn);
+            $num_task = count_tasks_NoDeadline($conn);
+            break;
+
+        default:
+            $text = "Все задачи";
+            $tasks = get_all_tasks($conn);
+            $num_task = count_tasks($conn);
+            break;
     }
+    // End of my code
+
+
     $users = get_all_users($conn);
 
     ?>
